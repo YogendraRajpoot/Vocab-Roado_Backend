@@ -1,9 +1,10 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const app = express();
-const vocabWord = require("./Models/vocab");
+const vocabModal = require("./Models/vocab");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const fetch = require("node-fetch");
 
 // const data=require("./data.json")
 dotenv.config();
@@ -13,15 +14,16 @@ app.use(bodyParser.json([]));
 app.use(cors());
 
 app.get("/", (req, res) => {
-  // console.log(data);
-  res.send("Welcome to Swiggy-Clone Backend Server! endpoint : /api/ :D");
+  console.log("hello");  
+  res.send(`Welcome to Swiggy-Clone Backend Server! endpoint : /api/ :D`);
 });
 
 app.post("/vocab", async (req, res, next) => {
   try {
     // console.log("17",req.body);
     let worddetails = req.body;
-    let response = await vocabWord.insertMany([worddetails]);
+    // console.log("25",worddetails);
+    let response = await vocabModal.insertMany([worddetails]);
     // console.log("19",response);
     res.json(response);
   } catch (error) {
@@ -29,10 +31,9 @@ app.post("/vocab", async (req, res, next) => {
     res.json(response);
   }
 });
-
 app.get("/vocab", async (req, res) => {
   try {
-    let response = await vocabWord.find({});
+    let response = await vocabModal.find({});
     // console.log(response);
     res.json(response);
   } catch (error) {
@@ -40,6 +41,22 @@ app.get("/vocab", async (req, res) => {
   }
 });
 
+app.get("/:id", function (req, res) {
+  let app_id = "a3963750";
+  let app_key = "98679027a5e0ba9b046410e0ef8f93a8";
+  let endpoint = "entries";
+  let language_code = "en-gb";
+  // let word = "example";
+  const word = req.params.id;
+  let url = `https://od-api.oxforddictionaries.com/api/v2/${endpoint}/${language_code}/${word}`;
 
+  fetch(url, {
+    method: "GET",
+    mode: "no-cors",
+    headers: { app_key: app_key, app_id: app_id },
+  })
+    .then((response) => response.json())
+    .then((data) => res.send(data));
+});
 
 module.exports = app;

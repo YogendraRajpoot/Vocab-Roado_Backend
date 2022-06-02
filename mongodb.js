@@ -5,7 +5,7 @@ class mongo {
     this.createMongoConnection();
   }
   createMongoConnection() {
-    mongoose.connect(process.env.Vocab_url);
+    mongoose.connect(process.env.Vocab);
     mongoose.connection.once(`open`, () => {
       console.log(`MongoDB is connected`);
     });
