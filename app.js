@@ -41,8 +41,8 @@ app.get("/vocab", async (req, res) => {
 });
 
 app.get("/:id", function (req, res) {
-  let app_id = "a3963750";
-  let app_key = "98679027a5e0ba9b046410e0ef8f93a8";
+  let app_id = "id";
+  let app_key = "key";
   let endpoint = "entries";
   let language_code = "en-gb";
   // let word = "example";
