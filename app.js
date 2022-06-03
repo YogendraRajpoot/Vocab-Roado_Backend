@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const fetch = require("node-fetch");
 
-// const data=require("./data.json")
 dotenv.config();
 
 app.use(bodyParser.json([]));
